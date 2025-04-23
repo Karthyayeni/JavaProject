@@ -4,7 +4,7 @@ pipeline {
     tools {
         jdk 'JDK-17' // Make sure this name matches the JDK name in Jenkins (Manage Jenkins > Global Tool Configuration)
         maven 'Maven-3.8.8' // Same here for Maven
-        git 'Defaultgit'
+        git 'Default'
     }
 
     stages {
