@@ -2,34 +2,42 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK-17' // Make sure this name matches the JDK name in Jenkins (Manage Jenkins > Global Tool Configuration)
-        maven 'Maven-3.8.8' // Same here for Maven
-        git 'Default'
+        maven 'Maven-3.8.8' // Make sure this matches your installed Maven version in Jenkins
+        jdk 'JDK-17' // Or 'JDK 17' depending on your setup
     }
 
     stages {
-        stage('Clone') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/Karthyayeni/MyJavaProject.git'
+                git credentialsId: 'github-token', url: 'https://github.com/Karthyayeni/MyJavaProject.git', branch: 'main'
             }
         }
 
         stage('Build & Test') {
             steps {
-                sh 'mvn clean test'
+                echo 'Running Maven build and tests...'
+                sh 'mvn clean install'
             }
         }
 
         stage('Test Report') {
             steps {
-                junit '**/target/surefire-reports/*.xml'
+                echo 'Publishing JUnit test reports...'
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
             }
         }
     }
 
     post {
-        always {
-            echo 'Build finished'
+        success {
+            echo 'Build and Tests were successful'
+        }
+        failure {
+            echo 'Something went wrong with the build or tests'
         }
     }
 }
