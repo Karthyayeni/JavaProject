@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'github-token', url: 'https://github.com/Karthyayeni/MyJavaProject.git', branch: 'main'
+                git credentialsId: 'github-token', url: 'https://github.com/Karthyayeni/JavaProject.git', branch: 'main'
             }
         }
 
