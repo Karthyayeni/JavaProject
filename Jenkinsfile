@@ -1,9 +1,11 @@
 pipeline {
     agent any
 
-    options{
-        githubPush()
+        options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        timestamps()
     }
+
     tools {
         maven 'Maven-3.8.8' // Make sure this matches your installed Maven version in Jenkins
         jdk 'JDK-17' // Or 'JDK 17' depending on your setup
